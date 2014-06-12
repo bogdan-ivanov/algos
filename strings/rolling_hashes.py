@@ -1,5 +1,8 @@
 
 """
+Rolling Hashes & Rabin-Karp
+---------------------------
+
 The Rabin-Karp string search algorithm is normally used with a very simple rolling hash function that only
 uses multiplications and additions:
 
@@ -8,10 +11,20 @@ input characters.
 
 In order to avoid manipulating huge H values, all math is done modulo n. The choice of a and n is
 critical to get good hashing; see linear congruential generator for more discussion.
+
+Caveats:
+--------
+Hashing collisions are a problem.
+One way to deal with them is to check for a match when two fingerprints are equal,
+but this makes the solution inefficient if there are lots of matches.
+Another way is to use more hashing functions to decrease the collision probability.
 """
 
 
 def find(needle, haystack):
+    """
+    Find all occurances of needle in haystack
+    """
     A = 10                  # The constant coefficient
     MOD = 29              # Prime number used for modulo
 
@@ -55,7 +68,12 @@ def find(needle, haystack):
 
     return offsets
 
-P = '313'
-S = '44411311166643134445553313'
 
-print find(P, S)
+def demo_find():
+    needle = '313'
+    haystack = '44411311166643134445553313'
+    print find(needle, haystack)
+
+
+if __name__ == "__main__":
+    demo_find()
